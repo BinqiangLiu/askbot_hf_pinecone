@@ -1,7 +1,8 @@
-#import streamlit as st
-from langchain.document_loaders import UnstructuredPDFLoader
+import streamlit as st
+#from langchain.document_loaders import UnstructuredPDFLoader
+from langchain.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-#from langchain.text_splitter import CharacterTextSplitter
+from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import Pinecone
 import pinecone
 import requests
@@ -24,8 +25,9 @@ import string
 from dotenv import load_dotenv
 load_dotenv()
 
-loader = UnstructuredPDFLoader("D:/ChatGPTApps/AskBookLangChainOpenAI/TheAPP/valuation.pdf") 
-data = loader.load()
+#loader = UnstructuredPDFLoader("D:/ChatGPTApps/AskBookLangChainOpenAI/TheAPP/valuation.pdf") 
+loader = PyPDFLoader("D:/ChatGPTApps/AskBookLangChainOpenAI/TheAPP/valuation.pdf")
+data = loader.load() 
 
 print()
 print(data)
