@@ -118,3 +118,4 @@ if user_query !="" and not user_query.strip().isspace() and not user_query.isspa
     st.write("AI Response:"+final_ai_response)    
 else:
     print("Invalid inputs.")  
+    st.write("Enter your query first.")    
