@@ -29,8 +29,8 @@ load_dotenv()
 #loader = PyPDFLoader("valuation.pdf")
 #data = loader.load() 
 
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
-db_texts = text_splitter.split_documents(data)
+#text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
+#db_texts = text_splitter.split_documents(data)
 
 data = PdfReader("valuation.pdf")
 raw_text = ''
