@@ -102,8 +102,8 @@ chain = load_qa_chain(llm=llm, chain_type="stuff")
 
 user_query=st.text_input("Enter your query:\n")  
 if user_query !="" and not user_query.strip().isspace() and not user_query.isspace():
-    print("Your query:\n"+user_query)
-    print()
+  print("Your query:\n"+user_query)  
+  with st.spinner("AI Thinking...Please wait a while to Cheers!"):    
     vector_db_from_index = Pinecone.from_existing_index(index_name, hf_embeddings, namespace=namespace)
     ss_results = vector_db_from_index.similarity_search(query=user_query, namespace=namespace, k=5)
     print(f'Similarity Searched Contexts:\n')
@@ -115,3 +115,4 @@ if user_query !="" and not user_query.strip().isspace() and not user_query.isspa
     final_ai_response = temp_ai_response.replace('\n', '')
     print("AI Response:")
     print(final_ai_response)
+    st.write("AI Response:"+final_ai_response)    
