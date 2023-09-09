@@ -106,7 +106,7 @@ llm = HuggingFaceHub(repo_id=repo_id,
 chain = load_qa_chain(llm=llm, chain_type="stuff")
 
 while True:
-    user_query=input("Enter your query:\n")
+    user_query=st.text_input("Enter your query:\n")    
     print("Your query:\n"+user_query)
     print()
     vector_db_from_index = Pinecone.from_existing_index(index_name, hf_embeddings, namespace=namespace)
