@@ -76,11 +76,10 @@ headers = {"Authorization": f"Bearer {hf_token}"}
 
 hf_embeddings = HFEmbeddings(api_url, headers)
 
-
 pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_ENVIRONMENT)
 
 index_name = PINECONE_INDEX_NAME
-namespace = "valuation"
+namespace = "askbot-hf-pinecone"
 
 vector_db = Pinecone.from_texts(db_texts, hf_embeddings, index_name=index_name, namespace=namespace)
 #vector_db = Pinecone.from_texts([t.page_content for t in db_texts], hf_embeddings, index_name=index_name, namespace=namespace)
