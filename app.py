@@ -106,7 +106,8 @@ llm = HuggingFaceHub(repo_id=repo_id,
 chain = load_qa_chain(llm=llm, chain_type="stuff")
 
 while True:
-    user_query=st.text_input("Enter your query:\n")    
+  user_query=st.text_input("Enter your query:\n")  
+  if user_query !="" and not user_query.strip().isspace() and not user_query.isspace()::
     print("Your query:\n"+user_query)
     print()
     vector_db_from_index = Pinecone.from_existing_index(index_name, hf_embeddings, namespace=namespace)
@@ -120,21 +121,3 @@ while True:
     final_ai_response = temp_ai_response.replace('\n', '')
     print("AI Response:")
     print(final_ai_response)
-
-#使用这个while True，在cmd命令行窗口中可以实现持续询问，而不会重新生成向量并增加到Pinecone
-
-#如果想要删除某个namespace，需要使用如下代码：唤起pinecone数据库 - 指明要删除的namespace所在的index，然后执行删除命令
-#pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_ENVIRONMENT)
-#index_namespace_to_delete = pinecone.Index(index_name=index_name)
-#index_namespace_to_delete.delete(delete_all=True, namespace=namespace)
-#index_name.delete(delete_all=True, namespace="askpdfbot") #神奇，有时候这个代码可以删除namespace，但大多数时候报错：AttributeError: 'str' object has no attribute 'delete'
-
-#查看Pinecone账户下的Index（名称）
-pinecone.list_indexes()
-index_name=pinecone.list_indexes()
-
-#查看Pinecone的Index状态
-#index = pinecone.Index(index_name=index_name)
-#index.describe_index_stats() 
-
-#What valuation methods are discussed and most recommended?
