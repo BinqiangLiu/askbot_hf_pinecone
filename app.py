@@ -26,7 +26,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 #loader = UnstructuredPDFLoader("D:/ChatGPTApps/AskBookLangChainOpenAI/TheAPP/valuation.pdf") 
-loader = PyPDFLoader("D:/ChatGPTApps/AskBookLangChainOpenAI/TheAPP/valuation.pdf")
+loader = PyPDFLoader("valuation.pdf")
 data = loader.load() 
 
 print()
