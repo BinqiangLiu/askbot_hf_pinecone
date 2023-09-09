@@ -106,7 +106,7 @@ llm = HuggingFaceHub(repo_id=repo_id,
 chain = load_qa_chain(llm=llm, chain_type="stuff")
 
 user_query=st.text_input("Enter your query:\n")  
-if user_query !="" and not user_query.strip().isspace() and not user_query.isspace()::
+if user_query !="" and not user_query.strip().isspace() and not user_query.isspace():
     print("Your query:\n"+user_query)
     print()
     vector_db_from_index = Pinecone.from_existing_index(index_name, hf_embeddings, namespace=namespace)
