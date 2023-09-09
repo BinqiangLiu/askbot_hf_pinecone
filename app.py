@@ -12,7 +12,7 @@ from langchain.chains.question_answering import load_qa_chain
 #from langchain.chains import RetrievalQA
 from langchain import PromptTemplate
 from langchain import HuggingFaceHub
-#from PyPDF2 import PdfReader
+from PyPDF2 import PdfReader
 #from langchain.document_loaders import TextLoader
 #from sentence_transformers.util import semantic_search
 from pathlib import Path
@@ -25,29 +25,27 @@ import string
 from dotenv import load_dotenv
 load_dotenv()
 
-#loader = UnstructuredPDFLoader("D:/ChatGPTApps/AskBookLangChainOpenAI/TheAPP/valuation.pdf") 
-loader = PyPDFLoader("valuation.pdf")
-data = loader.load() 
-
-print()
-print(data)
-print("***********************************")
-print()
-
-print (f'You have {len(data)} document(s) in your data')
-print()
-print (f'There are {len(data[0].page_content)} characters in your document')
-print()
+#loader = UnstructuredPDFLoader("valuation.pdf") 
+#loader = PyPDFLoader("valuation.pdf")
+#data = loader.load() 
 
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
-print(text_splitter)
-print()
-
 db_texts = text_splitter.split_documents(data)
-print(db_texts)
-print("***********************************")
-print()
-print (f'Now you have {len(db_texts)} documents')
+
+data = PdfReader("valuation.pdf")
+raw_text = ''
+db_texts=''
+for i, page in enumerate(data.pages):
+    text = page.extract_text()
+    if text:
+        raw_text += text
+        text_splitter = RecursiveCharacterTextSplitter(        
+#            separator = "\n",
+            chunk_size = 1000,
+            chunk_overlap  = 100, #striding over the text
+            length_function = len,
+        )
+        db_texts = text_splitter.split_text(raw_text)
 
 class HFEmbeddings:
     def __init__(self, api_url, headers):
@@ -84,10 +82,8 @@ pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_ENVIRONMENT)
 index_name = PINECONE_INDEX_NAME
 namespace = "valuation"
 
-#vector_db = Pinecone.from_texts(db_texts, hf_embeddings, index_name=index_name, namespace=namespace)
-
-vector_db = Pinecone.from_texts([t.page_content for t in db_texts], hf_embeddings, index_name=index_name, namespace=namespace)
-
+vector_db = Pinecone.from_texts(db_texts, hf_embeddings, index_name=index_name, namespace=namespace)
+#vector_db = Pinecone.from_texts([t.page_content for t in db_texts], hf_embeddings, index_name=index_name, namespace=namespace)
 #docsearch = Pinecone.from_texts([t.page_content for t in texts], embeddings, index_name=index_name, namespace=namespace)
 print("***********************************")
 print("Pinecone Vector/Embedding DB Ready.")
